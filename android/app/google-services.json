@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "18467774501",
+    "project_id": "ctrl-abastecimento-p2",
+    "storage_bucket": "ctrl-abastecimento-p2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18467774501:android:93f1becc42000fb2501fcc",
+        "android_client_info": {
+          "package_name": "com.example.abastecimento_p2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbX9I-FtjXn0IgdwYeDyz-_-i7dc0Cn0E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
