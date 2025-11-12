@@ -1,7 +1,5 @@
 import 'package:abastecimento_p2/core/theme/app_theme.dart';
-import 'package:abastecimento_p2/features/auth/presentation/login_page.dart';
-import 'package:abastecimento_p2/features/home/presentation/home_page.dart';
-import 'package:abastecimento_p2/routes/app_routes.dart';
+import 'package:abastecimento_p2/features/auth/services/auth_gate.dart';
 
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,13 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Controle de Abastecimento',
       theme: customTheme,
-      initialRoute: AppRoutes.login,
-      routes: {
-        AppRoutes.login: (context) => const LoginPage(),
-        AppRoutes.home: (context) => const HomePage(),
-        //AppRoutes.vehicles: (context) => const VehiclesListPage(),
-        //AppRoutes.fuel: (context) => const FuelListPage(),
-      },
+      home: const AuthGate(),
     );
   }
 }
