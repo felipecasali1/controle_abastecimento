@@ -1,8 +1,8 @@
+import 'package:abastecimento_p2/features/auth/presentation/auth_gate.dart';
 import 'package:abastecimento_p2/features/auth/presentation/register_page.dart';
-import 'package:abastecimento_p2/features/auth/services/auth_service.dart';
-import 'package:abastecimento_p2/features/home/presentation/home_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:abastecimento_p2/features/auth/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,81 +16,130 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  final _authServices = FirebaseServices();
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   void _login() async {
-    if(!_formKey.currentState!.validate()) {
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
 
-    try {
-      UserCredential? userCred = await _authServices.signInWithEmailPassword(_emailController.text, _passwordController.text);
-      if(userCred != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
-      } 
-    } catch (e) {
-      final msg = e.toString().replaceFirst('Exception: ', '');
+    final auth = context.read<AuthProvider>();
+
+    final success = await auth.signIn(
+      _emailController.text.trim(),
+      _passwordController.text.trim(),
+    );
+
+    if (success && mounted) {
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const AuthGate()));
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(msg)),
-      );      
+        const SnackBar(
+          content: Text('Login realizado com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } else if (!success && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(auth.error ?? 'Erro ao fazer login! Tente novamente!'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Controle de Abastecimento'),
-      ),
+      appBar: AppBar(title: const Text('Controle de Abastecimento')),
       body: Center(
         child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Text('Login'),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'E-mail',
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch, // LARGURA TOTAL
+                children: [
+                  const Text(
+                    'Login',
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Digite seu e-mail!';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(
-                    labelText: 'Senha',
+
+                  const SizedBox(height: 32),
+
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'E-mail',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Digite seu e-mail!';
+                      }
+                      return null;
+                    },
                   ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Digite sua senha!';
-                    }
-                    return null;
-                  },
-                ),
-                ElevatedButton(
-                  onPressed: () => _login(),
-                  child: Text('Entrar')
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const RegisterPage()),
-                    );
-                  }, 
-                  child: Text('Criar uma conta')
-                ),
-              ],
+
+                  const SizedBox(height: 20),
+
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Senha',
+                      border: OutlineInputBorder(),
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Digite sua senha!';
+                      }
+                      if (value.length < 6) {
+                        return 'A senha deve ter pelo menos 6 caracteres';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _login,
+                      child: const Text(
+                        'Entrar',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Criar uma conta',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
