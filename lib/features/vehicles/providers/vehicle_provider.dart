@@ -71,4 +71,9 @@ class VehicleProvider with ChangeNotifier {
       return null;
     }
   }
+
+  void clearVehicles() {
+    _vehicles.clear();
+    notifyListeners();
+  }
 }

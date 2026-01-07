@@ -41,7 +41,10 @@ class _RegisterPageState extends State<RegisterPage> {
       ).pushReplacement(MaterialPageRoute(builder: (_) => const AuthGate()));
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Cadastro realizado com sucesso!'),
+          content: Text(
+            'Cadastro realizado com sucesso!',
+            style: TextStyle(color: Colors.white),
+          ),
           backgroundColor: Colors.green,
         ),
       );
@@ -49,7 +52,10 @@ class _RegisterPageState extends State<RegisterPage> {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(auth.error ?? 'Erro ao cadastrar! Tente novamente!'),
+          content: Text(
+            auth.error ?? 'Erro ao cadastrar! Tente novamente!',
+            style: TextStyle(color: Colors.white),
+          ),
           backgroundColor: Colors.red,
         ),
       );
@@ -63,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(24.0), // PADRÃO APLICADO
+            padding: const EdgeInsets.all(24.0),
             child: Form(
               key: _formKey,
               child: Column(

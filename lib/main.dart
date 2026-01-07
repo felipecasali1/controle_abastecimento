@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             title: 'Controle de Abastecimento',
             theme: customTheme,
             darkTheme: customDarkTheme,
-            themeMode: themeProvider.themeMode,
+            themeMode: themeProvider.isDark ? ThemeMode.dark : ThemeMode.light,
             home: const AuthGate(),
           );
         },

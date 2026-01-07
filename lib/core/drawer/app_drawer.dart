@@ -4,7 +4,9 @@ import 'package:abastecimento_p2/features/auth/services/auth_service.dart';
 import 'package:abastecimento_p2/features/home/presentation/home_page.dart';
 import 'package:abastecimento_p2/features/refueling/presentation/refueling_list_page.dart';
 import 'package:abastecimento_p2/features/refueling/presentation/refueling_register_page.dart';
+import 'package:abastecimento_p2/features/refueling/providers/refueling_provider.dart';
 import 'package:abastecimento_p2/features/vehicles/presentation/vehicle_list_page.dart';
+import 'package:abastecimento_p2/features/vehicles/providers/vehicle_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,19 +23,26 @@ class MyDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(color: Colors.blue),
-            child: Text(
-              'Controle\nde\nAbastecimento',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.local_gas_station, size: 48, color: Colors.white),
+                SizedBox(width: 5),
+                Text(
+                  'ReFuel',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
             ),
           ),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text('Início'),
             onTap: () {
               Navigator.pop(context);
               Navigator.pushReplacement(
@@ -82,9 +91,9 @@ class MyDrawer extends StatelessWidget {
           SwitchListTile(
             secondary: const Icon(Icons.dark_mode),
             title: const Text('Modo Escuro'),
-            value: themeProvider.isDarkMode,
+            value: themeProvider.isDark,
             onChanged: (value) {
-              themeProvider.toggleTheme(value);
+              themeProvider.toggleTheme();
             },
           ),
           ListTile(
@@ -114,6 +123,8 @@ class MyDrawer extends StatelessWidget {
 
               if (context.mounted && confirm == true) {
                 await _authService.signOut();
+                context.read<RefuelingProvider>().clearRefuelings();
+                context.read<VehicleProvider>().clearVehicles();
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => const AuthGate()),

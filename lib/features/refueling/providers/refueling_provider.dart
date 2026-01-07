@@ -94,4 +94,9 @@ class RefuelingProvider with ChangeNotifier {
       return false;
     }
   }
+
+  void clearRefuelings() {
+    _refuelings.clear();
+    notifyListeners();
+  }
 }

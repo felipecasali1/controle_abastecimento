@@ -60,6 +60,7 @@ class _VehicleRegisterPageState extends State<VehicleRegisterPage> {
             content: Text(
               vehicleProvider.errorMsg ??
                   'Erro ao cadastrar veículo! Tente novamente!',
+              style: TextStyle(color: Colors.white),
             ),
             backgroundColor: Colors.red,
           ),
@@ -74,7 +75,7 @@ class _VehicleRegisterPageState extends State<VehicleRegisterPage> {
       appBar: AppBar(title: const Text("Cadastrar Veículo")),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0), // <- PADRÃO
+          padding: const EdgeInsets.all(24.0),
           child: Form(
             key: _formKey,
             child: Column(

@@ -51,6 +51,7 @@ class VehicleService {
       final vehicleRefuelings = await _firestore
           .collection('refuelings')
           .where('vehicleId', isEqualTo: vehicle.id)
+          .where('userId', isEqualTo: vehicle.userId)
           .get();
 
       for (var doc in vehicleRefuelings.docs) {

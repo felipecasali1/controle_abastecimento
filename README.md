@@ -16,12 +16,11 @@ Ferramentas
 - Firebase e Firestore
 - Provider
 - Flutter Chart
+- Shared Preferences
 
 Melhorias e Correções futuras
 
-- Armazenar tema utilizado no shared_preferences
 - Verificação de e-mail no cadastro para recuperação de senha e segurança
 - Log In com Google
 - Tela de estatísticas com gráficos do Flutter Chart
-- Correção do histórico de abastecimentos
 - Atualização do método de autenticação por conta da descontinuação do Firebase Dynamic Links

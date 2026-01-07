@@ -1,6 +1,8 @@
 import 'package:abastecimento_p2/features/auth/services/auth_service.dart';
+import 'package:abastecimento_p2/features/refueling/providers/refueling_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthProvider with ChangeNotifier {
   final AuthService _authServices = AuthService();
@@ -57,7 +59,7 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> signOut() async {
+  Future<bool> signOut(BuildContext context) async {
     try {
       await _authServices.signOut();
       return true;

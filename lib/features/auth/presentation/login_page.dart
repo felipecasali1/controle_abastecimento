@@ -39,14 +39,20 @@ class _LoginPageState extends State<LoginPage> {
       ).pushReplacement(MaterialPageRoute(builder: (_) => const AuthGate()));
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Login realizado com sucesso!'),
+          content: Text(
+            'Login realizado com sucesso!',
+            style: TextStyle(color: Colors.white),
+          ),
           backgroundColor: Colors.green,
         ),
       );
     } else if (!success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(auth.error ?? 'Erro ao fazer login! Tente novamente!'),
+          content: Text(
+            auth.error ?? 'Erro ao fazer login! Tente novamente!',
+            style: TextStyle(color: Colors.white),
+          ),
           backgroundColor: Colors.red,
         ),
       );
@@ -64,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch, // LARGURA TOTAL
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
                     'Login',

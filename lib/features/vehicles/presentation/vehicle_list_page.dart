@@ -58,7 +58,10 @@ class _VehicleListPageState extends State<VehicleListPage> {
           if (result == true && context.mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Veículo cadastrado com sucesso!'),
+                content: Text(
+                  'Veículo cadastrado com sucesso!',
+                  style: TextStyle(color: Colors.white),
+                ),
                 backgroundColor: Colors.green,
               ),
             );
@@ -131,7 +134,10 @@ class _VehicleListPageState extends State<VehicleListPage> {
       if (success && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Veículo excluído com sucesso!'),
+            content: Text(
+              'Veículo excluído com sucesso!',
+              style: TextStyle(color: Colors.white),
+            ),
             backgroundColor: Colors.green,
           ),
         );
